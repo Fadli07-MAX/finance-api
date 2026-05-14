@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session
 from app.database import engine, SessionLocal
 from app.models import UserDB, ItemDB, Base
 from app.dependencies import get_current_admin
+from fastapi.middleware.cors import CORSMiddleware
 
 from datetime import datetime, timedelta, UTC
 from jose import jwt, JWTError
@@ -18,7 +19,15 @@ from fastapi.security import (
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
-
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:3000",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 # =========================================================
 # JWT CONFIGURATION
 # =========================================================
