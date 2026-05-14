@@ -1,10 +1,13 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
+import os
 import time
 
-DATABASE_URL = "postgresql+psycopg://postgres:postgres@db:5432/finance_api"
+DATABASE_URL = os.getenv(
+    "DATABASE_URL",
+    "sqlite:///./items.db"
+)
 
-# Retry koneksi database
 for i in range(10):
     try:
         engine = create_engine(DATABASE_URL)
